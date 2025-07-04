@@ -229,6 +229,19 @@ func (a *App) buildCommand() {
 	a.cmd = &cmd
 }
 
+// Run is used to launch the application.
+func (a *App) Run() {
+	if err := a.cmd.Execute(); err != nil {
+		fmt.Printf("%v %v\n", color.RedString("Error:"), err)
+		os.Exit(1)
+	}
+}
+
+// Command returns cobra command instance inside the application.
+func (a *App) Command() *cobra.Command {
+	return a.cmd
+}
+
 func (a *App) runCommand(cmd *cobra.Command, args []string) error {
 	printWorkingDir()
 	cliflag.PrintFlags(cmd.Flags())
